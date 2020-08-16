@@ -162,4 +162,14 @@ describe('pont功能测试', () => {
     assert.ok(apidts.includes(oneline('bodyParams: defs.api3.Pet')))
     manager.stopPolling();
   })
+
+  test('response with 201 should got correct response type', async () => {
+    clearDir('services')
+    const manager = await createManager('config-response-with-201.json');
+    assert.ok(exists('services/api.d.ts'))
+    const codeBuffer = await fs.readFile(getPath('services/api.d.ts'));
+    const apidts = oneline(codeBuffer.toString('utf-8'))
+    assert.ok(apidts.includes(oneline('export type Response = defs.api3.AuthRO')))
+    manager.stopPolling();
+  })
 });
