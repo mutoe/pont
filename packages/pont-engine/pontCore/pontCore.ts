@@ -5,7 +5,7 @@
 class PontCoreManager {
   static singleInstance = null as PontCoreManager;
 
-  static getSignleInstance() {
+  static getSingleInstance() {
     if (!PontCoreManager.singleInstance) {
       PontCoreManager.singleInstance = new PontCoreManager();
       return PontCoreManager.singleInstance;
@@ -18,7 +18,7 @@ class PontCoreManager {
    * @param url 请求url
    * @param options fetch 请求配置
    */
-  fetch(url: string, options = {}) {
+  fetch(url: string, options: RequestInit = {}) {
     return fetch(url, options).then(res => {
       return res.json();
     });
@@ -41,7 +41,7 @@ class PontCoreManager {
       ...(queryParams || ({} as any))
     };
 
-    const url = path.replace(/\{([^\\}]*(?:\\.[^\\}]*)*)\}/gm, (match, key) => {
+    const url = path.replace(/{([^\\}]*(?:\\.[^\\}]*)*)}/gm, (match, key) => {
       // eslint-disable-next-line no-param-reassign
       key = key.trim();
 
@@ -69,4 +69,4 @@ class PontCoreManager {
   }
 }
 
-export const PontCore = PontCoreManager.getSignleInstance();
+export const PontCore = PontCoreManager.getSingleInstance();
